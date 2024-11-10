@@ -1,47 +1,36 @@
-import styled from 'styled-components';
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import GlobalStyles from './styles/GlobalStyles';
-import Button from './ui/Button';
-import Input from './ui/Input';
-import Heading from './ui/Heading';
-import Row from './ui/Row';
 
-const StyledApp = styled.main`
-padding: 20px;
-`;
+import Dashboard from './Pages/Dashboard';
+import Bookings from './Pages/Bookings';
+import Cabins from './Pages/Cabins';
+import Users from './Pages/Users';
+import Settings from './Pages/Settings';
+import Account from './Pages/Account';
+import Login from './Pages/Login';
+import PageNotFound from './Pages/PageNotFound';
+
 
 function App() {
   return (
     <>
-    <GlobalStyles />
-    <StyledApp>
-      <Row>
-      <Row type='horizontol'>
-      <Heading as='h1'>Welcome World</Heading>
+    <GlobalStyles/>
+      <BrowserRouter>
+      <Routes>
+      <Route index element={<Navigate replace to='Dashboard' />}/>
+      <Route path="dashboard" element={<Dashboard/>}/>
+      <Route path="account" element={<Account/>}/>
+      <Route path="bookings" element={<Bookings/>}/>
+      <Route path="cabins" element={<Cabins/>}/>
+      <Route path="login" element={<Login/>}/>
+      <Route path="settings" element={<Settings/>}/>
+      <Route path="users" element={<Users/>}/>
+      <Route path="*" element={<PageNotFound />}/>
 
-    <div>
-   <Heading as='h2'>Check In</Heading>
-   <Button 
-   size='medium' 
-   vartion='primary' 
-   onClick={() => alert('Check In')}>Check In</Button>
-   <Button    
-   size='small' 
-   vartion='danger' 
-   onClick={() => alert('Check Out')}>Check Out</Button>
-  </div>
-    </Row>
-    
-    <Row>
-    <Heading as='h3'>Form</Heading>
-    <form>
-    <Input type='number' placeholder='number of guests'/>
-    <Input type='number' placeholder='number of guests'/>
-    </form>
-    </Row>
-      </Row>
-    </StyledApp>
-    </>
-  );
+      </Routes>
+      </BrowserRouter>
+      </>
+  )
 }
 
 export default App;
