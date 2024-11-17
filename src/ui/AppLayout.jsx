@@ -16,16 +16,27 @@ grid-template-columns: 26rem 1fr;
 grid-template-rows: auto 1fr;
 `;
 
+const Container = styled.div`
+max-Width: 120rem;
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+gap: 3.2rem;
+`;
+
+
 function AppLayout() {
     return (
         <StledAppLayout>
            <Header/>
            <SideBar/>
            <Main>
+           <Container>
            <Outlet/>
+          </Container>
            </Main>
         </StledAppLayout>
     )
 }
 
-export default AppLayout
+export default AppLayout;
