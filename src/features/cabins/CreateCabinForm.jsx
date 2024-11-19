@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {createCabin } from "../../services/apiCabines";
+import toast from 'react-hot-toast';
+
 
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
@@ -44,10 +48,29 @@ const Error = styled.span`
 `;
 
 function CreateCabinForm() {
-  const {register, handleSubmit} = useForm();
+  const {register, handleSubmit, reset} = useForm();
+
+  const queryClient = useQueryClient();
+
+  const {isLoading: isCreating, mutate} = useMutation({
+    mutationFn: createCabin,
+
+    onSuccess: () => {
+      toast.success('New cabin successfully deleted');
+      queryClient.invalidateQueries({queryKey: ['cabins']});
+      reset();
+    },
+
+   onError: (err) => toast.error(err.message),
+  });
+
+
+  function OnSubmit(data) {
+    mutate(data);
+  }
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(OnSubmit)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input type="text" id="name" {...register('name')} />
@@ -83,7 +106,7 @@ function CreateCabinForm() {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button>Edit cabin</Button>
+        <Button disabled={isCreating}>Add cabin</Button>
       </FormRow>
     </Form>
   );

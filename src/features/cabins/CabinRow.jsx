@@ -65,8 +65,6 @@ image,
    mutationFn: deleteCabin,
    onSuccess: () => {
     toast.success('Cabin Succssefuly deleted');
-
-    
     queryClient.invalidateQueries({
    queryKey: ['cabins'],
    });
