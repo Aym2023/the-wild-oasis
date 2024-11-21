@@ -19,7 +19,7 @@ const { data, error } = await supabase
 .insert([newCabin]);
 
 if (error) {
-   console.error(error);
+   // console.error(error);
    throw new Error('Cabines could not be created');
 }
 

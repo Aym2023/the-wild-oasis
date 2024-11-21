@@ -49,6 +49,9 @@ const variations = {
 };
 
 const Button = styled.button`
+color: var(--color-brand-50);
+background-color: var(--color-brand-700);
+padding: 0.4rem 0.8rem;
 border: none;
 border-radius: var(--border-radius-sm);
 box-shadow: var(--shadow-sm);

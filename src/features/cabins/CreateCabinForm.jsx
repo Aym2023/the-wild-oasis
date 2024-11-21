@@ -48,19 +48,17 @@ const Error = styled.span`
 `;
 
 function CreateCabinForm() {
-  const {register, handleSubmit, reset} = useForm();
+  const {register, handleSubmit, reset, getValues} = useForm();
 
   const queryClient = useQueryClient();
 
   const {isLoading: isCreating, mutate} = useMutation({
     mutationFn: createCabin,
-
     onSuccess: () => {
       toast.success('New cabin successfully deleted');
       queryClient.invalidateQueries({queryKey: ['cabins']});
       reset();
     },
-
    onError: (err) => toast.error(err.message),
   });
 
@@ -69,31 +67,61 @@ function CreateCabinForm() {
     mutate(data);
   }
 
+  function OnError(errors) {
+    console.log(errors);
+  }
+
   return (
-    <Form onSubmit={handleSubmit(OnSubmit)}>
+    <Form onSubmit={handleSubmit(OnSubmit, OnError)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
-        <Input type="text" id="name" {...register('name')} />
+        <Input type="text" id="name" {...register('name', {
+          required: 'This field is required',
+        }
+        )}/>
       </FormRow>
 
       <FormRow>
         <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" {...register('maxCapacity')}/>
+        <Input type="number" id="maxCapacity" {...register('maxCapacity', {
+          required: 'This field is required',
+          min: {
+            value:1,
+            message: 'Capacity shold be at least 1',
+          }
+        } 
+        )}/>
       </FormRow>
 
       <FormRow>
         <Label htmlFor="regularPrice">Regular price</Label>
-        <Input type="number" id="regularPrice" {...register('regularPrice')}/>
+        <Input type="number" id="regularPrice" {...register('regularPrice', {
+          requierd: 'This field is required',
+          min: {
+            value:1,
+            message: 'Capacity shold be at least 1',
+          }
+        } 
+      )}/>
       </FormRow>
 
       <FormRow>
         <Label htmlFor="discount">Discount</Label>
-        <Input type="number" id="discount" defaultValue={0} {...register('discount')}/>
+        <Input type="number" id="discount" defaultValue={0} {...register('discount', 
+        {
+          required: 'This field is required',
+          validate: (value) => value <= getValues().regularPrice || 'Discount should be less than regularPrice',
+        } 
+        )}/>
       </FormRow>
 
       <FormRow>
         <Label htmlFor="description">Description for website</Label>
-        <Textarea type="number" id="description" defaultValue=""  {...register('description')}/>
+        <Textarea type="number" id="description" defaultValue=""  {...register('description',         
+        {
+          required: 'This field is required',
+        } 
+      )}/>
       </FormRow>
 
       <FormRow>
