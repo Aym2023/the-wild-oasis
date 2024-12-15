@@ -7,7 +7,7 @@ import {Toaster}  from 'react-hot-toast';
 
 import Dashboard from './Pages/Dashboard';
 import Bookings from './Pages/Bookings';
-import Cabins from './Pages/Cabins';
+import Cabins from './pages/Cabins';
 import Users from './Pages/Users';
 import Settings from './Pages/Settings';
 import Account from './Pages/Account';

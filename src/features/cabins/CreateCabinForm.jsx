@@ -37,7 +37,6 @@ function CreateCabinForm() {
   }
 
   function OnError(errors) {
-  //  console.log(errors);
   }
 
   return (
@@ -47,7 +46,9 @@ function CreateCabinForm() {
     error={errors?.name?.message}>
     <Input 
     type="text" 
-    id="name" {...register('name', {
+    id="name" 
+    disabled={isCreating}
+    {...register('name', {
          required: 'This field is required',
         }
         )}/>
@@ -58,23 +59,25 @@ function CreateCabinForm() {
     error={errors?.maxCapacity?.message}>
      <Input 
      type="number" 
-     disabled={isCreating}
      id="maxCapacity"
+     disabled={isCreating}
       {...register('maxCapacity', {
            required: 'This field is required',
           min: {
              value:1,
-            message: 'Capacity shold be at least 1',
+             message: 'Capacity shold be at least 1',
            }
          })}
          />
      </FormRow>
 
-      <FormRow label='Regular price' error={errors?.regularPrice?.message}>
+      <FormRow 
+      label='Regular price' 
+      error={errors?.regularPrice?.message}>
       <Input 
       type="number" 
-      disabled={isCreating}
       id="regularPrice" 
+      disabled={isCreating}
       {...register('regularPrice', {
           required: 'This field is required',
           min: {
@@ -90,12 +93,13 @@ function CreateCabinForm() {
       error={errors?.discount?.message}>
       <Input 
       type="number" 
-      disabled={isCreating}
       id="discount" 
+      disabled={isCreating}
       defaultValue={0} 
       {...register('discount', {
           required: 'This field is required',
-          validate: (value) => value <= getValues().regularPrice || 'Discount should be less than regularPrice',
+          validate: (value) =>
+             value <= getValues().regularPrice || 'Discount should be less than regularPrice',
         })}
         />
     </FormRow>
@@ -107,8 +111,8 @@ function CreateCabinForm() {
       >
       <Textarea 
       type="number" 
-      disabled={isCreating}
       id="description" 
+      disabled={isCreating}
       defaultValue=""  
       {...register('description', {
           required: 'This field is required',
@@ -123,7 +127,7 @@ function CreateCabinForm() {
       >
         <FileInput 
         id="image"  
-        // disabled={isCreating}
+        disabled={isCreating}
         accept="image/*"
         {...register('image', {
           required: 'This field is required',
@@ -132,7 +136,6 @@ function CreateCabinForm() {
         </FormRow>
 
        <FormRow>
-         {/* type is an HTML attribute */ }
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
